@@ -1,0 +1,20 @@
+{
+    "name": "nece001/php-gears-cms",
+    "description": "php CMS功能",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Nece001\\Gears\\Cms\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "nece001",
+            "email": "nece001@163.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2"
+    }
+}
