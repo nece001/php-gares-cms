@@ -1,6 +1,6 @@
 <?php
 
-namespace Nece001\Gears\Cms;
+namespace Nece\Gears\Cms;
 
 class CmsApplicationService
 {

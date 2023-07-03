@@ -1,6 +1,6 @@
 <?php
 
-namespace Nece001\Gears\Cms\Entity;
+namespace Nece\Gears\Cms\Entity;
 
 /**
  * 模型实体
@@ -8,7 +8,7 @@ namespace Nece001\Gears\Cms\Entity;
  * @Author nece001@163.com
  * @DateTime 2023-07-02
  */
-class CmsModelEntiry
+class CmsModelEntity
 {
     public $id;
     public $create_time;

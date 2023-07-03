@@ -1,9 +1,9 @@
 <?php
 
-namespace Nece001\Gears\Cms;
+namespace Nece\Gears\Cms;
 
-use Nece001\Gears\Cms\Aggregate\CmsModelAggregate;
-use Nece001\Gears\Cms\Entity\CmsModelEntiry;
+use Nece\Gears\Cms\Aggregate\CmsModelAggregate;
+use Nece\Gears\Cms\Entity\CmsModelEntiry;
 
 class CmsModelService
 {

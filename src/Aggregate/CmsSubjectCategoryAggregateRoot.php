@@ -1,8 +1,8 @@
 <?php
 
-namespace Nece001\Gears\Cms\Aggregate;
+namespace Nece\Gears\Cms\Aggregate;
 
-class CmsSubjectAggregate
+class CmsSubjectCategoryAggregateRoot
 {
     public function list()
     {
