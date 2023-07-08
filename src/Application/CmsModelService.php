@@ -1,23 +1,29 @@
 <?php
 
-namespace Nece\Gears\Cms;
+namespace Nece\Gears\Cms\Application;
 
 use Nece\Gears\Cms\Aggregate\CmsModelAggregate;
-use Nece\Gears\Cms\Entity\CmsModelEntiry;
+use Nece\Gears\Cms\Aggregate\CmsModelAggregateRoot;
+use Nece\Gears\Cms\Repository\ICmsModelDefinitionRepository;
 
 class CmsModelService
 {
     /**
      * 模型存储仓库
      *
-     * @var ICmsModelRepository
+     * @var ICmsModelDefinitionRepository
      * @Author nece001@163.com
      * @DateTime 2023-07-02
      */
-    private $cmsModelRepository;
+    private $cmsModelDefinitionRepository;
+
+    public function __construct(ICmsModelDefinitionRepository $cmsModelDefinitionRepository)
+    {
+        $this->cmsModelDefinitionRepository = $cmsModelDefinitionRepository;
+    }
 
     /**
-     * 保存
+     * 保存业务方法
      *
      * @Author nece001@163.com
      * @DateTime 2023-07-02
@@ -29,19 +35,16 @@ class CmsModelService
     public function save(array $params)
     {
         // 校验参数
-        
+
+        $title = $params['title'];
+        $is_disabled = $params['is_disabled'];
+        $id = $params['id'];
+
         // 创建实体
-        $cmsModelEntirt = new CmsModelEntiry();
-        $cmsModelEntirt->id = isset($params['id']) ? $params['id'] : null;
-        $cmsModelEntirt->title = isset($params['title']) ? $params['title'] : '';
+        $definition = CmsModelAggregateRoot::buildDefinition($title, $is_disabled, $id);
 
-        // 创建聚合
-        $cmsModelAggregate = new CmsModelAggregate();
-        $cmsModelAggregate->save($cmsModelEntirt);
-
-        // 保存
-        $this->cmsModelRepository->save($cmsModelAggregate);
-
-        return $cmsModelAggregate;
+        // 保存实体
+        $this->cmsModelDefinitionRepository->createOrUpdate($definition);
+        return $definition;
     }
 }

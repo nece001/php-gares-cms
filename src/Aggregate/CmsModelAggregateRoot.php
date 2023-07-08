@@ -22,6 +22,13 @@ class CmsModelAggregateRoot
      */
     protected $definition;
 
+    /**
+     * 删除的模型定义
+     *
+     * @var array
+     * @Author nece001@163.com
+     * @DateTime 2023-07-08
+     */
     protected $deleted_definitions = array();
 
     /**
@@ -33,6 +40,13 @@ class CmsModelAggregateRoot
      */
     protected $fields = array();
 
+    /**
+     * 删除的模型字段
+     *
+     * @var array
+     * @Author nece001@163.com
+     * @DateTime 2023-07-08
+     */
     protected $deleted_fields = array();
 
     /**
@@ -47,7 +61,7 @@ class CmsModelAggregateRoot
      *
      * @return CmsModelDefinitionEntity
      */
-    public function buildDefinition($title, $is_disabled = false, $id = '')
+    public static function buildDefinition($title, $is_disabled = false, $id = '')
     {
         $item = new CmsModelDefinitionEntity();
         $item->id = $id;
@@ -118,7 +132,7 @@ class CmsModelAggregateRoot
      *
      * @return CmsModelFieldEntity
      */
-    public function buildField($title, $value_type, $value_format = '', $search_type = 0, $sort = 0, $is_disabled = false, $id = '')
+    public static function buildField($title, $value_type, $value_format = '', $search_type = 0, $sort = 0, $is_disabled = false, $id = '')
     {
         $item = new CmsModelFieldEntity();
         $item->id = $id;
