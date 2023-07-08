@@ -3,12 +3,12 @@
 namespace Nece\Gears\Cms\Entity;
 
 /**
- * 模型实体
+ * 模型定义实体
  *
  * @Author nece001@163.com
  * @DateTime 2023-07-02
  */
-class CmsModelEntity
+class CmsModelDefinitionEntity
 {
     public $id;
     public $create_time;

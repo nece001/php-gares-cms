@@ -15,7 +15,7 @@ class CmsModelFieldEntity
     public $update_time;
     public $is_disabled;
     public $sort;
-    public $model_id;
+    public $definition_id;
     public $search_type;
     public $value_type;
     public $value_format;

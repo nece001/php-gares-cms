@@ -2,6 +2,8 @@
 
 namespace Nece\Gears\Cms;
 
+use Nece\Gears\Cms\Entity\CmsModelDefinitionEntity;
+
 /**
  * 仓储接口
  *
@@ -13,7 +15,7 @@ interface ICmsRepository
 
     public function find($id);
 
-    public function save(array $entities);
+    public function createOrUpdate(array $entities);
 
-    public function delete(array $ids);
+    public function delete(CmsModelDefinitionEntity $definition);
 }
