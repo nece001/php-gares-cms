@@ -117,6 +117,19 @@ class CmsModelAggregateRoot
     }
 
     /**
+     * 获取要删除的模型定义
+     *
+     * @Author nece001@163.com
+     * @DateTime 2023-07-09
+     *
+     * @return array
+     */
+    public function getDeletedDefinations()
+    {
+        return $this->deleted_definitions;
+    }
+
+    /**
      * 构建模型字段实体
      *
      * @Author nece001@163.com
@@ -188,5 +201,18 @@ class CmsModelAggregateRoot
         $item = new CmsModelFieldEntity();
         $item->id = $id;
         $this->deleted_fields[] = $item;
+    }
+
+    /**
+     * 获取要删除的模型字段
+     *
+     * @Author nece001@163.com
+     * @DateTime 2023-07-09
+     *
+     * @return array
+     */
+    public function getDeletedFields()
+    {
+        return $this->deleted_fields;
     }
 }
