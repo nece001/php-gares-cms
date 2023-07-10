@@ -3,13 +3,14 @@
 namespace Nece\Gears\Cms\Application;
 
 use Nece\Gears\Cms\Aggregate\CmsModelAggregateRoot;
+use Nece\Gears\Cms\CmsException;
 use Nece\Gears\Cms\Repository\ICmsModelDefinitionRepository;
 use Nece\Gears\Cms\Repository\ICmsModelFieldRepository;
 use Nece\Gears\IValidate;
+use Nece\Util\ArrayUtil;
 
 class CmsModelService
 {
-
     /**
      * 验证器
      *
@@ -58,13 +59,13 @@ class CmsModelService
     {
         // 校验参数
         $this->validate->validate($params, array(
-            'title'=>'require',
-            'is_disabled'=>'require',
+            'title' => 'require',
+            'is_disabled' => 'require',
         ));
 
-        $title = $params['title'];
-        $is_disabled = $params['is_disabled'];
-        $id = $params['id'];
+        $title = ArrayUtil::getValue($params, 'title', '');
+        $is_disabled = ArrayUtil::getValue($params, 'is_disabled', '');
+        $id = ArrayUtil::getValue($params, 'id', '');
 
         $cmsModelAggregateRoot = new CmsModelAggregateRoot();
 
@@ -89,7 +90,11 @@ class CmsModelService
      */
     public function detail(array $params)
     {
-        $id = $params['id'];
+        $this->validate->validate($params, array(
+            'id' => 'require',
+        ));
+
+        $id = ArrayUtil::getValue($params, 'id', '');
 
         $definition = $this->cmsModelDefinitionRepository->find($id);
 
@@ -114,7 +119,11 @@ class CmsModelService
      */
     public function delete(array $params)
     {
-        $id = $params['id'];
+        $this->validate->validate($params, array(
+            'id' => 'require',
+        ));
+
+        $id = ArrayUtil::getValue($params, 'id', '');
 
         $cmsModelAggregateRoot = new CmsModelAggregateRoot();
         $cmsModelAggregateRoot->deleteDefination($id);
@@ -126,16 +135,29 @@ class CmsModelService
 
     public function saveField(array $params)
     {
-        $id = $params['id'];
-        $definition_id = $params['definition_id'];
-        $title = $params['title'];
-        $is_disabled = $params['is_disabled'];
-        $sort = $params['sort'];
-        $search_type = $params['search_type'];
-        $value_type = $params['value_type'];
-        $value_format = $params['value_format'];
+        $this->validate->validate($params, array(
+            'definition_id' => 'require',
+            'title' => 'require',
+            'is_disabled' => 'require',
+            'sort' => 'require',
+            'search_type' => 'require',
+            'value_type' => 'require',
+        ));
 
-        $definition = CmsModelAggregateRoot::buildDefinition('', 0, $definition_id);
+        $id = ArrayUtil::getValue($params, 'id', '');
+        $definition_id = ArrayUtil::getValue($params, 'definition_id', '');;
+        $title = ArrayUtil::getValue($params, 'title', '');;
+        $is_disabled = ArrayUtil::getValue($params, 'is_disabled', '');;
+        $sort = ArrayUtil::getValue($params, 'sort', '');;
+        $search_type = ArrayUtil::getValue($params, 'search_type', '');;
+        $value_type = ArrayUtil::getValue($params, 'value_type', '');;
+        $value_format = ArrayUtil::getValue($params, 'value_format', '');;
+
+        $definition = $this->cmsModelDefinitionRepository->find($definition_id);
+        if (!$definition) {
+            throw new CmsException('定义不存在');
+        }
+
         $field = CmsModelAggregateRoot::buildField($title, $value_type, $value_format, $search_type, $sort, $is_disabled, $id);
 
         $cmsModelAggregateRoot = new CmsModelAggregateRoot();
@@ -144,6 +166,41 @@ class CmsModelService
 
         foreach ($cmsModelAggregateRoot->getFields() as $field) {
             $this->cmsModelFieldRepository->createOrUpdate($field);
+        }
+    }
+
+    public function detailField(array $params)
+    {
+        $this->validate->validate($params, array(
+            'id' => 'require',
+        ));
+
+        $id = ArrayUtil::getValue($params, 'id', '');
+
+        $field = $this->cmsModelFieldRepository->find($id);
+
+        if ($field) {
+            $cmsModelAggregateRoot = new CmsModelAggregateRoot();
+            $cmsModelAggregateRoot->addField($field);
+            return $cmsModelAggregateRoot;
+        }
+
+        return null;
+    }
+
+    public function deleteField(array $params)
+    {
+        $this->validate->validate($params, array(
+            'id' => 'require',
+        ));
+
+        $id = ArrayUtil::getValue($params, 'id', '');
+
+        $cmsModelAggregateRoot = new CmsModelAggregateRoot();
+        $cmsModelAggregateRoot->deleteField($id);
+
+        foreach ($cmsModelAggregateRoot->getDeletedFields() as $field) {
+            $this->cmsModelFieldRepository->delete($field);
         }
     }
 }

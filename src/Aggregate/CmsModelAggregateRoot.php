@@ -155,6 +155,7 @@ class CmsModelAggregateRoot
         $item->search_type = $search_type;
         $item->sort = $sort;
         $item->is_disabled = $is_disabled;
+        return $item;
     }
 
     /**
