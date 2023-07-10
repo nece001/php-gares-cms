@@ -4,10 +4,21 @@ namespace Nece\Gears\Cms\Application;
 
 use Nece\Gears\Cms\Aggregate\CmsModelAggregateRoot;
 use Nece\Gears\Cms\Repository\ICmsModelDefinitionRepository;
-use Nece\Gears\Cms\Repository\ThinkPHP\CmsModelFieldRepository;
+use Nece\Gears\Cms\Repository\ICmsModelFieldRepository;
+use Nece\Gears\IValidate;
 
 class CmsModelService
 {
+
+    /**
+     * 验证器
+     *
+     * @var IValidate
+     * @Author nece001@163.com
+     * @DateTime 2023-07-10
+     */
+    private $validate;
+
     /**
      * 模型存储仓库
      *
@@ -26,8 +37,9 @@ class CmsModelService
      */
     private $cmsModelFieldRepository;
 
-    public function __construct(ICmsModelDefinitionRepository $cmsModelDefinitionRepository, CmsModelFieldRepository $cmsModelFieldRepository)
+    public function __construct(IValidate $validate, ICmsModelDefinitionRepository $cmsModelDefinitionRepository, ICmsModelFieldRepository $cmsModelFieldRepository)
     {
+        $this->validate = $validate;
         $this->cmsModelDefinitionRepository = $cmsModelDefinitionRepository;
         $this->cmsModelFieldRepository = $cmsModelFieldRepository;
     }
@@ -45,6 +57,10 @@ class CmsModelService
     public function save(array $params)
     {
         // 校验参数
+        $this->validate->validate($params, array(
+            'title'=>'require',
+            'is_disabled'=>'require',
+        ));
 
         $title = $params['title'];
         $is_disabled = $params['is_disabled'];
