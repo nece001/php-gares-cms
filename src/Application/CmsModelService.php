@@ -4,6 +4,7 @@ namespace Nece\Gears\Cms\Application;
 
 use Nece\Gears\Cms\Aggregate\CmsModelAggregateRoot;
 use Nece\Gears\Cms\Repository\ICmsModelDefinitionRepository;
+use Nece\Gears\Cms\Repository\ThinkPHP\CmsModelFieldRepository;
 
 class CmsModelService
 {
@@ -16,9 +17,19 @@ class CmsModelService
      */
     private $cmsModelDefinitionRepository;
 
-    public function __construct(ICmsModelDefinitionRepository $cmsModelDefinitionRepository)
+    /**
+     * 模型字段仓库
+     *
+     * @var CmsModelFieldRepository
+     * @Author nece001@163.com
+     * @DateTime 2023-07-10
+     */
+    private $cmsModelFieldRepository;
+
+    public function __construct(ICmsModelDefinitionRepository $cmsModelDefinitionRepository, CmsModelFieldRepository $cmsModelFieldRepository)
     {
         $this->cmsModelDefinitionRepository = $cmsModelDefinitionRepository;
+        $this->cmsModelFieldRepository = $cmsModelFieldRepository;
     }
 
     /**
@@ -94,6 +105,29 @@ class CmsModelService
 
         foreach ($cmsModelAggregateRoot->getDeletedDefinations() as $definition) {
             $this->cmsModelDefinitionRepository->delete($definition);
+        }
+    }
+
+    public function saveField(array $params)
+    {
+        $id = $params['id'];
+        $definition_id = $params['definition_id'];
+        $title = $params['title'];
+        $is_disabled = $params['is_disabled'];
+        $sort = $params['sort'];
+        $search_type = $params['search_type'];
+        $value_type = $params['value_type'];
+        $value_format = $params['value_format'];
+
+        $definition = CmsModelAggregateRoot::buildDefinition('', 0, $definition_id);
+        $field = CmsModelAggregateRoot::buildField($title, $value_type, $value_format, $search_type, $sort, $is_disabled, $id);
+
+        $cmsModelAggregateRoot = new CmsModelAggregateRoot();
+        $cmsModelAggregateRoot->setDefinition($definition);
+        $cmsModelAggregateRoot->addField($field);
+
+        foreach ($cmsModelAggregateRoot->getFields() as $field) {
+            $this->cmsModelFieldRepository->createOrUpdate($field);
         }
     }
 }
