@@ -33,7 +33,7 @@ interface ICmsModelFieldRepository
      *
      * @param CmsModelFieldEntity $entity
      *
-     * @return void
+     * @return CmsModelFieldEntity
      */
     public function createOrUpdate(CmsModelFieldEntity $entity);
 
@@ -43,9 +43,21 @@ interface ICmsModelFieldRepository
      * @Author nece001@163.com
      * @DateTime 2023-07-08
      *
-     * @param CmsModelFieldEntity $definition
+     * @param string $id
      *
-     * @return void
+     * @return integer
      */
-    public function delete(CmsModelFieldEntity $definition);
+    public function deleteById($id);
+
+    /**
+     * 删除模型的所有字段
+     *
+     * @Author nece001@163.com
+     * @DateTime 2023-07-11
+     *
+     * @param string $id
+     *
+     * @return integer
+     */
+    public function deleteByDefinitionId($id);
 }

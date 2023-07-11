@@ -33,7 +33,7 @@ interface ICmsModelDefinitionRepository
      *
      * @param CmsModelDefinitionEntity $entity
      *
-     * @return void
+     * @return CmsModelDefinitionEntity
      */
     public function createOrUpdate(CmsModelDefinitionEntity $entity);
 
@@ -43,9 +43,9 @@ interface ICmsModelDefinitionRepository
      * @Author nece001@163.com
      * @DateTime 2023-07-08
      *
-     * @param CmsModelDefinitionEntity $definition
+     * @param string $id
      *
-     * @return void
+     * @return integer
      */
-    public function delete(CmsModelDefinitionEntity $definition);
+    public function deleteById($id);
 }
