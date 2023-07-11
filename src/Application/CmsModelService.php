@@ -4,6 +4,9 @@ namespace Nece\Gears\Cms\Application;
 
 use Nece\Gears\Cms\Aggregate\CmsModelAggregateRoot;
 use Nece\Gears\Cms\CmsException;
+use Nece\Gears\Cms\Entity\CmsModelDefinitionEntity;
+use Nece\Gears\Cms\Entity\CmsModelFieldEntity;
+use Nece\Gears\Cms\Entity\CmsModelFieldValueEntity;
 use Nece\Gears\Cms\Repository\ICmsModelDefinitionRepository;
 use Nece\Gears\Cms\Repository\ICmsModelFieldRepository;
 use Nece\Gears\IValidate;
@@ -67,15 +70,16 @@ class CmsModelService
         $is_disabled = ArrayUtil::getValue($params, 'is_disabled', '');
         $id = ArrayUtil::getValue($params, 'id', '');
 
-        $cmsModelAggregateRoot = new CmsModelAggregateRoot();
 
         // 创建实体
-        $definition = CmsModelAggregateRoot::buildDefinition($title, $is_disabled, $id);
-        $cmsModelAggregateRoot->setDefinition($definition);
+        $definition = new CmsModelDefinitionEntity();
+        $definition->title = $title;
+        $definition->is_disabled = $is_disabled;
+        $definition->id = $id;
 
         // 保存实体
         $this->cmsModelDefinitionRepository->createOrUpdate($definition);
-        return $cmsModelAggregateRoot;
+        return $definition;
     }
 
     /**
@@ -99,9 +103,7 @@ class CmsModelService
         $definition = $this->cmsModelDefinitionRepository->find($id);
 
         if ($definition) {
-            $cmsModelAggregateRoot = new CmsModelAggregateRoot();
-            $cmsModelAggregateRoot->setDefinition($definition);
-            return $cmsModelAggregateRoot;
+            return $definition;
         }
 
         return null;
@@ -125,12 +127,10 @@ class CmsModelService
 
         $id = ArrayUtil::getValue($params, 'id', '');
 
-        $cmsModelAggregateRoot = new CmsModelAggregateRoot();
-        $cmsModelAggregateRoot->deleteDefination($id);
+        $definition = new CmsModelDefinitionEntity();
+        $definition->id = $id;
 
-        foreach ($cmsModelAggregateRoot->getDeletedDefinations() as $definition) {
-            $this->cmsModelDefinitionRepository->delete($definition);
-        }
+        $this->cmsModelDefinitionRepository->delete($definition);
     }
 
     public function saveField(array $params)
@@ -158,15 +158,16 @@ class CmsModelService
             throw new CmsException('定义不存在');
         }
 
-        $field = CmsModelAggregateRoot::buildField($title, $value_type, $value_format, $search_type, $sort, $is_disabled, $id);
+        $field = new CmsModelFieldEntity();
+        $field->title = $title;
+        $field->value_type = $value_type;
+        $field->value_format = $value_format;
+        $field->search_type = $search_type;
+        $field->sort = $sort;
+        $field->is_disabled = $is_disabled;
+        $field->id = $id;
 
-        $cmsModelAggregateRoot = new CmsModelAggregateRoot();
-        $cmsModelAggregateRoot->setDefinition($definition);
-        $cmsModelAggregateRoot->addField($field);
-
-        foreach ($cmsModelAggregateRoot->getFields() as $field) {
-            $this->cmsModelFieldRepository->createOrUpdate($field);
-        }
+        $this->cmsModelFieldRepository->createOrUpdate($field);
     }
 
     public function detailField(array $params)
@@ -180,9 +181,7 @@ class CmsModelService
         $field = $this->cmsModelFieldRepository->find($id);
 
         if ($field) {
-            $cmsModelAggregateRoot = new CmsModelAggregateRoot();
-            $cmsModelAggregateRoot->addField($field);
-            return $cmsModelAggregateRoot;
+            return $field;
         }
 
         return null;
@@ -195,12 +194,9 @@ class CmsModelService
         ));
 
         $id = ArrayUtil::getValue($params, 'id', '');
+        $field = new CmsModelFieldEntity();
+        $field->id = $id;
 
-        $cmsModelAggregateRoot = new CmsModelAggregateRoot();
-        $cmsModelAggregateRoot->deleteField($id);
-
-        foreach ($cmsModelAggregateRoot->getDeletedFields() as $field) {
-            $this->cmsModelFieldRepository->delete($field);
-        }
+        $this->cmsModelFieldRepository->delete($field);
     }
 }
