@@ -2,6 +2,8 @@
 
 namespace Nece\Gears\Cms\Entity;
 
+use Nece\Gears\Cms\Service\Category;
+
 /**
  * 模型定义实体
  *
@@ -51,5 +53,14 @@ class CmsModelDefinitionEntity
         $field->is_disabled = $is_disabled;
         $field->definition_id = $this->id;
         return $field;
+    }
+
+    public function makeCategory($parent_id, $title)
+    {
+        $category = new CmsSubjectCategoryEntity();
+        $category->parent_id = $parent_id;
+        $category->title = $title;
+        $category->model_definition_id = $this->id;
+        return $category;
     }
 }
