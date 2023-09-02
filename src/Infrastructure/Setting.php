@@ -4,6 +4,12 @@ namespace Nece\Gears\Cms\Infrastructure;
 
 use Nece\Gears\SimpleSetting\Application\SettingApplication;
 
+/**
+ * 调用支撑域的方法
+ *
+ * @Author nece001@163.com
+ * @DateTime 2023-09-02
+ */
 class Setting
 {
     /**
