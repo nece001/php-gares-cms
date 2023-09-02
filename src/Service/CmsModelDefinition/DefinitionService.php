@@ -2,19 +2,20 @@
 
 namespace Nece\Gears\Cms\Service\CmsModelDefinition;
 
+use Nece\Gears\Cms\Infrastructure\Setting;
 use Nece\Gears\Cms\Repository\ICmsModelDefinitionRepository;
-use Nece\Gears\IValidate;
+use Nece\Gears\IValidator;
 
 abstract class DefinitionService
 {
     /**
      * 验证器
      *
-     * @var IValidate
+     * @var IValidator
      * @Author nece001@163.com
      * @DateTime 2023-07-10
      */
-    protected $validate;
+    protected $validator;
 
     /**
      * 模型存储仓库
@@ -25,10 +26,13 @@ abstract class DefinitionService
      */
     protected $cmsModelDefinitionRepository;
 
-    public function __construct(IValidate $validate, ICmsModelDefinitionRepository $cmsModelDefinitionRepository)
+    protected $setting;
+
+    public function __construct(IValidator $validator, Setting $setting, ICmsModelDefinitionRepository $cmsModelDefinitionRepository)
     {
-        $this->validate = $validate;
+        $this->validator = $validator;
         $this->cmsModelDefinitionRepository = $cmsModelDefinitionRepository;
+        $this->setting = $setting;
     }
 
     abstract public function execute(array $params);
