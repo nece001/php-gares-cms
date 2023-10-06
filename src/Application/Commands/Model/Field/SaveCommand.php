@@ -51,15 +51,15 @@ class SaveCommand extends IntCommandAbstract
             'title' => 'require'
         ));
 
-        $entity              = new CmsModelFieldEntity();
-        $entity->id          = ArrayUtil::getInt($params, 'id');
-        $entity->sort     = ArrayUtil::getInt($params, 'sort');
-        $entity->title       = ArrayUtil::getString($params, 'title');
-        $entity->is_disabled = ArrayUtil::getInt($params, 'is_disabled');
+        $entity                = new CmsModelFieldEntity();
+        $entity->id            = ArrayUtil::getInt($params, 'id');
+        $entity->sort          = ArrayUtil::getInt($params, 'sort');
+        $entity->title         = ArrayUtil::getString($params, 'title');
+        $entity->is_disabled   = ArrayUtil::getInt($params, 'is_disabled');
         $entity->definition_id = ArrayUtil::getInt($params, 'definition_id');
-        $entity->search_type = ArrayUtil::getInt($params, 'search_type');
-        $entity->value_type = ArrayUtil::getString($params, 'value_type');
-        $entity->value_format = ArrayUtil::getString($params, 'value_format');
+        $entity->search_type   = ArrayUtil::getInt($params, 'search_type');
+        $entity->value_type    = ArrayUtil::getString($params, 'value_type');
+        $entity->value_format  = ArrayUtil::getString($params, 'value_format');
 
         return $this->cmsModelFieldRepository->createOrUpdate($entity);
     }
