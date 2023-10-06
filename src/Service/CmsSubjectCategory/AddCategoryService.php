@@ -18,7 +18,7 @@ class AddCategoryService extends CategoryService
      */
     public function execute(array $params)
     {
-        $this->validate->validate($params, array(
+        $this->validator->validate($params, array(
             'model_definition_id' => 'require',
             'title' => 'require',
             'parent_id' => 'require',
