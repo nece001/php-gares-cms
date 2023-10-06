@@ -53,4 +53,14 @@ interface ICmsSiteRepository
      * @return Paginator
      */
     public function pagedList(array $params): Paginator;
+
+    /**
+     * 全部
+     *
+     * @Author nece001@163.com
+     * @DateTime 2023-10-06
+     *
+     * @return array
+     */
+    public function all(): array;
 }

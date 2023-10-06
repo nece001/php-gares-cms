@@ -1,8 +1,7 @@
 <?php
 
-namespace Nece\Gears\Cms\Repository;
+namespace Nece\Gears\Cms\Entity\Model\Field;
 
-use Nece\Gears\Cms\Entity\CmsModelFieldEntity;
 
 /**
  * 模型字段仓储接口
@@ -23,7 +22,7 @@ interface ICmsModelFieldRepository
      *
      * @return CmsModelFieldEntity|null
      */
-    public function find($id);
+    public function find($id): ?CmsModelFieldEntity;
 
     /**
      * 创建或更新模型
@@ -33,9 +32,9 @@ interface ICmsModelFieldRepository
      *
      * @param CmsModelFieldEntity $entity
      *
-     * @return CmsModelFieldEntity
+     * @return integer
      */
-    public function createOrUpdate(CmsModelFieldEntity $entity);
+    public function createOrUpdate(CmsModelFieldEntity $entity): int;
 
     /**
      * 删除模型
@@ -43,11 +42,11 @@ interface ICmsModelFieldRepository
      * @Author nece001@163.com
      * @DateTime 2023-07-08
      *
-     * @param string $id
+     * @param array $ids
      *
      * @return integer
      */
-    public function deleteById($id);
+    public function delete(array $ids): int;
 
     /**
      * 删除模型的所有字段
@@ -55,9 +54,21 @@ interface ICmsModelFieldRepository
      * @Author nece001@163.com
      * @DateTime 2023-07-11
      *
-     * @param string $id
+     * @param integer $id
      *
      * @return integer
      */
-    public function deleteByDefinitionId($id);
+    public function deleteByDefinitionId($id): int;
+
+    /**
+     * 定义的字段列表
+     *
+     * @Author nece001@163.com
+     * @DateTime 2023-10-06
+     *
+     * @param integer $id
+     *
+     * @return array
+     */
+    public function listByDefinitionId($id): array;
 }

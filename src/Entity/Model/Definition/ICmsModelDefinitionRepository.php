@@ -1,8 +1,8 @@
 <?php
 
-namespace Nece\Gears\Cms\Repository;
+namespace Nece\Gears\Cms\Entity\Model\Definition;
 
-use Nece\Gears\Cms\Entity\CmsModelDefinitionEntity;
+use Nece\Gears\Paginator;
 
 /**
  * 模型定义仓储接口
@@ -21,9 +21,9 @@ interface ICmsModelDefinitionRepository
      *
      * @param string $id
      *
-     * @return CmsModelDefinitionEntity|null
+     * @return CmsModelDefinitionEntity
      */
-    public function find($id);
+    public function find($id): ?CmsModelDefinitionEntity;
 
     /**
      * 创建或更新模型
@@ -33,9 +33,9 @@ interface ICmsModelDefinitionRepository
      *
      * @param CmsModelDefinitionEntity $entity
      *
-     * @return CmsModelDefinitionEntity
+     * @return integer
      */
-    public function createOrUpdate(CmsModelDefinitionEntity $entity);
+    public function createOrUpdate(CmsModelDefinitionEntity $entity): int;
 
     /**
      * 删除模型
@@ -43,9 +43,21 @@ interface ICmsModelDefinitionRepository
      * @Author nece001@163.com
      * @DateTime 2023-07-08
      *
-     * @param string $id
+     * @param array $ids
      *
      * @return integer
      */
-    public function deleteById($id);
+    public function delete(array $ids): int;
+
+    /**
+     * 分页
+     *
+     * @Author nece001@163.com
+     * @DateTime 2023-10-06
+     *
+     * @param array $params
+     *
+     * @return Paginator
+     */
+    public function pagedList(array $params): Paginator;
 }

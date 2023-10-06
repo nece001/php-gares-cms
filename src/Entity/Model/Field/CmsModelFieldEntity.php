@@ -1,6 +1,8 @@
 <?php
 
-namespace Nece\Gears\Cms\Entity;
+namespace Nece\Gears\Cms\Entity\Model\Field;
+
+use Nece\Gears\Entity;
 
 /**
  * 模型字段实体
@@ -8,7 +10,7 @@ namespace Nece\Gears\Cms\Entity;
  * @Author nece001@163.com
  * @DateTime 2023-07-02
  */
-class CmsModelFieldEntity
+class CmsModelFieldEntity extends Entity
 {
     public $id;
     public $create_time;
