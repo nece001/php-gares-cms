@@ -1,6 +1,6 @@
 <?php
 
-namespace Nece\Gears\Cms\Entity;
+namespace Nece\Gears\Cms\Entity\Subject\Category;
 
 use Nece\Gears\Entity;
 

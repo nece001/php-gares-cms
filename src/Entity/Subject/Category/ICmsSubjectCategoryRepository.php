@@ -1,8 +1,6 @@
 <?php
 
-namespace Nece\Gears\Cms\Repository;
-
-use Nece\Gears\Cms\Entity\CmsSubjectCategoryEntity;
+namespace Nece\Gears\Cms\Entity\Subject\Category;
 
 interface ICmsSubjectCategoryRepository
 {
@@ -16,7 +14,7 @@ interface ICmsSubjectCategoryRepository
      *
      * @return CmsSubjectCategoryEntity|null
      */
-    public function find($id);
+    public function find($id): ?CmsSubjectCategoryEntity;
 
     /**
      * 创建或更新分类
@@ -26,9 +24,21 @@ interface ICmsSubjectCategoryRepository
      *
      * @param CmsSubjectCategoryEntity $entity
      *
-     * @return CmsSubjectCategoryEntity
+     * @return integer
      */
-    public function createOrUpdate(CmsSubjectCategoryEntity $entity);
+    public function createOrUpdate(CmsSubjectCategoryEntity $entity): int;
+
+    /**
+     * 删除分类
+     *
+     * @Author nece001@163.com
+     * @DateTime 2023-10-09
+     *
+     * @param array $ids
+     *
+     * @return integer
+     */
+    public function delete(array $ids): int;
 
     /**
      * 删除分类
@@ -89,4 +99,16 @@ interface ICmsSubjectCategoryRepository
      * @return CmsSubjectCategoryEntity
      */
     public function getChildLastNodeOfParent($parent_id);
+
+    /**
+     * 获取父级子节点的最大节点序号
+     *
+     * @Author nece001@163.com
+     * @DateTime 2023-10-09
+     *
+     * @param int $parent_id
+     *
+     * @return string
+     */
+    public function getChildMaxNoOfParent($parent_id);
 }
